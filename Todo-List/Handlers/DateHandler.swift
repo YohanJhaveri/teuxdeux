@@ -8,16 +8,10 @@
 import Foundation
 
 class DateHandler {
-    static var firebaseDateFormatter = createDateFormatter(format: "yyyy-MM-dd")
-    static var friendlyDateFormatter = createDateFormatter(format: "MMMM dd")
-    static var fullDateFormatter = createDateFormatter(format: "MMMM dd, y")
-    static var fullTimeFormatter = createDateFormatter(format: "h:mm a")
-    
-    static func createDateFormatter(format: String) -> DateFormatter {
-        let formatter = DateFormatter()
-        formatter.dateFormat = format
-        return formatter
-    }
+    static var firebaseDateFormatter = DateFormatter(format: "yyyy-MM-dd")
+    static var friendlyDateFormatter = DateFormatter(format: "MMMM dd")
+    static var fullDateFormatter = DateFormatter(format: "MMMM dd, y")
+    static var fullTimeFormatter = DateFormatter(format: "h:mm a")
     
     static func getFirebaseDateString(from date: Date) -> String {
         return firebaseDateFormatter.string(from: date)

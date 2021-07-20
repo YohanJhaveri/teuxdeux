@@ -17,6 +17,7 @@ class LocationReminderFormViewController: UIViewController, UITableViewDelegate 
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        locationSearch.text = selectedReminder?.location.address
         locationSearch.becomeFirstResponder()
         locationSearch.delegate = self
         locationResults.delegate = self

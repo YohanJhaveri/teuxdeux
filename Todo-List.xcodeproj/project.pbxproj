@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		13094A2526A0A88E002300D3 /* GooglePlacesHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13094A2426A0A88E002300D3 /* GooglePlacesHandler.swift */; };
-		13094A2926A0CB52002300D3 /* Task.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 13094A2726A0CB52002300D3 /* Task.xcdatamodeld */; };
+		13094A9F26A608FF002300D3 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 13094A9D26A608FF002300D3 /* DataModel.xcdatamodeld */; };
 		130EB3C32694F594000DCF9F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 130EB3C22694F594000DCF9F /* AppDelegate.swift */; };
 		130EB3C52694F594000DCF9F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 130EB3C42694F594000DCF9F /* SceneDelegate.swift */; };
 		130EB3C72694F594000DCF9F /* EntryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 130EB3C62694F594000DCF9F /* EntryViewController.swift */; };
@@ -16,7 +16,6 @@
 		130EB3CC2694F59D000DCF9F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 130EB3CB2694F59D000DCF9F /* Assets.xcassets */; };
 		130EB3CF2694F59D000DCF9F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 130EB3CD2694F59D000DCF9F /* LaunchScreen.storyboard */; };
 		131D53C42698255100CF19F5 /* NotificationHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 131D53C32698255100CF19F5 /* NotificationHandler.swift */; };
-		131D53C62698274C00CF19F5 /* OfflineHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 131D53C52698274C00CF19F5 /* OfflineHandler.swift */; };
 		131D53CC2698D3D500CF19F5 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 131D53CB2698D3D500CF19F5 /* SettingsViewController.swift */; };
 		131D53CF2698DC0E00CF19F5 /* SettingsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 131D53CD2698DC0E00CF19F5 /* SettingsTableViewCell.swift */; };
 		131D53D02698DC0E00CF19F5 /* SettingsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 131D53CE2698DC0E00CF19F5 /* SettingsTableViewCell.xib */; };
@@ -36,12 +35,15 @@
 		137BAFC326952CDD00ACE3B6 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 137BAFC226952CDD00ACE3B6 /* CustomTextField.swift */; };
 		137BAFC7269540C600ACE3B6 /* TasksTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 137BAFC5269540C600ACE3B6 /* TasksTableViewCell.swift */; };
 		137BAFC8269540C600ACE3B6 /* TasksTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 137BAFC6269540C600ACE3B6 /* TasksTableViewCell.xib */; };
-		137BAFCA269554F700ACE3B6 /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 137BAFC9269554F700ACE3B6 /* Task.swift */; };
 		137BAFCC26957F3C00ACE3B6 /* TaskFormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 137BAFCB26957F3C00ACE3B6 /* TaskFormViewController.swift */; };
 		13A2CA9E269CA9CF00577789 /* TaskHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13A2CA9D269CA9CF00577789 /* TaskHandler.swift */; };
 		13A2CAA0269CB18200577789 /* DateHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13A2CA9F269CB18200577789 /* DateHandler.swift */; };
 		13CDAC2626958C990037F425 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13CDAC2526958C990037F425 /* Constants.swift */; };
 		13CDAC282695979E0037F425 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13CDAC272695979E0037F425 /* CustomButton.swift */; };
+		13D830DB26A6312300BD4DA6 /* DateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13D830DA26A6312300BD4DA6 /* DateFormatter.swift */; };
+		13D830E126A7322D00BD4DA6 /* TaskHandlerNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13D830E026A7322D00BD4DA6 /* TaskHandlerNew.swift */; };
+		13D830E326A7561C00BD4DA6 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13D830E226A7561C00BD4DA6 /* String.swift */; };
+		13D830E626A758A000BD4DA6 /* KeychainHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13D830E526A758A000BD4DA6 /* KeychainHandler.swift */; };
 		13F6CCB9269CF1C400B40131 /* ViewReminderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F6CCB7269CF1C400B40131 /* ViewReminderTableViewCell.swift */; };
 		13F6CCBA269CF1C400B40131 /* ViewReminderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13F6CCB8269CF1C400B40131 /* ViewReminderTableViewCell.xib */; };
 		13F6CCBC269CFA2000B40131 /* CountdownReminderFormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F6CCBB269CFA2000B40131 /* CountdownReminderFormViewController.swift */; };
@@ -56,7 +58,7 @@
 
 /* Begin PBXFileReference section */
 		13094A2426A0A88E002300D3 /* GooglePlacesHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GooglePlacesHandler.swift; sourceTree = "<group>"; };
-		13094A2826A0CB52002300D3 /* Task.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Task.xcdatamodel; sourceTree = "<group>"; };
+		13094A9E26A608FF002300D3 /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
 		130EB3BF2694F594000DCF9F /* Todo-List.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Todo-List.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		130EB3C22694F594000DCF9F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		130EB3C42694F594000DCF9F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -66,7 +68,6 @@
 		130EB3CE2694F59D000DCF9F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		130EB3D02694F59D000DCF9F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		131D53C32698255100CF19F5 /* NotificationHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationHandler.swift; sourceTree = "<group>"; };
-		131D53C52698274C00CF19F5 /* OfflineHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineHandler.swift; sourceTree = "<group>"; };
 		131D53CB2698D3D500CF19F5 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		131D53CD2698DC0E00CF19F5 /* SettingsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewCell.swift; sourceTree = "<group>"; };
 		131D53CE2698DC0E00CF19F5 /* SettingsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsTableViewCell.xib; sourceTree = "<group>"; };
@@ -86,12 +87,15 @@
 		137BAFC226952CDD00ACE3B6 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		137BAFC5269540C600ACE3B6 /* TasksTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasksTableViewCell.swift; sourceTree = "<group>"; };
 		137BAFC6269540C600ACE3B6 /* TasksTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TasksTableViewCell.xib; sourceTree = "<group>"; };
-		137BAFC9269554F700ACE3B6 /* Task.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
 		137BAFCB26957F3C00ACE3B6 /* TaskFormViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskFormViewController.swift; sourceTree = "<group>"; };
 		13A2CA9D269CA9CF00577789 /* TaskHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskHandler.swift; sourceTree = "<group>"; };
 		13A2CA9F269CB18200577789 /* DateHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateHandler.swift; sourceTree = "<group>"; };
 		13CDAC2526958C990037F425 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		13CDAC272695979E0037F425 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
+		13D830DA26A6312300BD4DA6 /* DateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatter.swift; sourceTree = "<group>"; };
+		13D830E026A7322D00BD4DA6 /* TaskHandlerNew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskHandlerNew.swift; sourceTree = "<group>"; };
+		13D830E226A7561C00BD4DA6 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
+		13D830E526A758A000BD4DA6 /* KeychainHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainHandler.swift; sourceTree = "<group>"; };
 		13F6CCB7269CF1C400B40131 /* ViewReminderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewReminderTableViewCell.swift; sourceTree = "<group>"; };
 		13F6CCB8269CF1C400B40131 /* ViewReminderTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ViewReminderTableViewCell.xib; sourceTree = "<group>"; };
 		13F6CCBB269CFA2000B40131 /* CountdownReminderFormViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountdownReminderFormViewController.swift; sourceTree = "<group>"; };
@@ -118,14 +122,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		13094A2626A0CB27002300D3 /* CoreDataModels */ = {
-			isa = PBXGroup;
-			children = (
-				13094A2726A0CB52002300D3 /* Task.xcdatamodeld */,
-			);
-			path = CoreDataModels;
-			sourceTree = "<group>";
-		};
 		130EB3B62694F593000DCF9F = {
 			isa = PBXGroup;
 			children = (
@@ -153,12 +149,12 @@
 				130EB3D02694F59D000DCF9F /* Info.plist */,
 				137BAFBB26951CBA00ACE3B6 /* GoogleService-Info.plist */,
 				130EB3CB2694F59D000DCF9F /* Assets.xcassets */,
+				13D830D926A6310C00BD4DA6 /* Extensions */,
 				137BAFC426952CE200ACE3B6 /* Components */,
 				13F6CCCB269E4BA100B40131 /* Handlers */,
 				137BAFB82695193F00ACE3B6 /* Models */,
 				131D53F7269912EE00CF19F5 /* Views */,
 				137BAFB72695192E00ACE3B6 /* Controllers */,
-				13094A2626A0CB27002300D3 /* CoreDataModels */,
 			);
 			path = "Todo-List";
 			sourceTree = "<group>";
@@ -186,9 +182,9 @@
 		137BAFB82695193F00ACE3B6 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				137BAFC9269554F700ACE3B6 /* Task.swift */,
 				13F6CCC9269E231300B40131 /* Reminder.swift */,
 				137BAFB92695195100ACE3B6 /* InputGroup.swift */,
+				13094A9D26A608FF002300D3 /* DataModel.xcdatamodeld */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -208,16 +204,26 @@
 			path = Components;
 			sourceTree = "<group>";
 		};
+		13D830D926A6310C00BD4DA6 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				13D830DA26A6312300BD4DA6 /* DateFormatter.swift */,
+				13D830E226A7561C00BD4DA6 /* String.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		13F6CCCB269E4BA100B40131 /* Handlers */ = {
 			isa = PBXGroup;
 			children = (
 				137BAFBF2695253600ACE3B6 /* AuthHandler.swift */,
+				13D830E526A758A000BD4DA6 /* KeychainHandler.swift */,
 				13A2CA9F269CB18200577789 /* DateHandler.swift */,
 				13A2CA9D269CA9CF00577789 /* TaskHandler.swift */,
 				13F6CCC7269E1F3000B40131 /* ReminderHandler.swift */,
 				131D53C32698255100CF19F5 /* NotificationHandler.swift */,
-				131D53C52698274C00CF19F5 /* OfflineHandler.swift */,
 				13094A2426A0A88E002300D3 /* GooglePlacesHandler.swift */,
+				13D830E026A7322D00BD4DA6 /* TaskHandlerNew.swift */,
 			);
 			path = Handlers;
 			sourceTree = "<group>";
@@ -443,7 +449,6 @@
 				137BAFC02695253600ACE3B6 /* AuthHandler.swift in Sources */,
 				131D53FF269917AC00CF19F5 /* AuthButton.swift in Sources */,
 				13F6CCB9269CF1C400B40131 /* ViewReminderTableViewCell.swift in Sources */,
-				131D53C62698274C00CF19F5 /* OfflineHandler.swift in Sources */,
 				13F6CCC6269E04A200B40131 /* LocationReminderFormViewController.swift in Sources */,
 				13F6CCC1269D0E4500B40131 /* AddReminderTableViewCell.swift in Sources */,
 				137BAFBA2695195100ACE3B6 /* InputGroup.swift in Sources */,
@@ -453,7 +458,6 @@
 				137BAFB42695091500ACE3B6 /* StartViewController.swift in Sources */,
 				131D53CF2698DC0E00CF19F5 /* SettingsTableViewCell.swift in Sources */,
 				13CDAC282695979E0037F425 /* CustomButton.swift in Sources */,
-				137BAFCA269554F700ACE3B6 /* Task.swift in Sources */,
 				13CDAC2626958C990037F425 /* Constants.swift in Sources */,
 				130EB3C32694F594000DCF9F /* AppDelegate.swift in Sources */,
 				13F6CCCA269E231300B40131 /* Reminder.swift in Sources */,
@@ -462,16 +466,20 @@
 				137BAFC326952CDD00ACE3B6 /* CustomTextField.swift in Sources */,
 				137BAFB626950A4A00ACE3B6 /* LoginViewController.swift in Sources */,
 				131D53FB2699178000CF19F5 /* AuthField.swift in Sources */,
-				13094A2926A0CB52002300D3 /* Task.xcdatamodeld in Sources */,
 				137BAFCC26957F3C00ACE3B6 /* TaskFormViewController.swift in Sources */,
 				131D53F92699140B00CF19F5 /* AuthLabel.swift in Sources */,
+				13D830E126A7322D00BD4DA6 /* TaskHandlerNew.swift in Sources */,
+				13D830DB26A6312300BD4DA6 /* DateFormatter.swift in Sources */,
 				130EB3C52694F594000DCF9F /* SceneDelegate.swift in Sources */,
+				13D830E326A7561C00BD4DA6 /* String.swift in Sources */,
 				131D53FD2699179C00CF19F5 /* AuthError.swift in Sources */,
 				13A2CA9E269CA9CF00577789 /* TaskHandler.swift in Sources */,
 				13F6CCC4269E049300B40131 /* ScheduledReminderFormViewController.swift in Sources */,
 				13F6CCBC269CFA2000B40131 /* CountdownReminderFormViewController.swift in Sources */,
 				131D53F426990FC300CF19F5 /* RemindersViewController.swift in Sources */,
 				137BAFBE269522C700ACE3B6 /* TasksViewController.swift in Sources */,
+				13D830E626A758A000BD4DA6 /* KeychainHandler.swift in Sources */,
+				13094A9F26A608FF002300D3 /* DataModel.xcdatamodeld in Sources */,
 				131D53CC2698D3D500CF19F5 /* SettingsViewController.swift in Sources */,
 				131D540126991AE400CF19F5 /* AuthTitle.swift in Sources */,
 			);
@@ -679,13 +687,13 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		13094A2726A0CB52002300D3 /* Task.xcdatamodeld */ = {
+		13094A9D26A608FF002300D3 /* DataModel.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				13094A2826A0CB52002300D3 /* Task.xcdatamodel */,
+				13094A9E26A608FF002300D3 /* DataModel.xcdatamodel */,
 			);
-			currentVersion = 13094A2826A0CB52002300D3 /* Task.xcdatamodel */;
-			path = Task.xcdatamodeld;
+			currentVersion = 13094A9E26A608FF002300D3 /* DataModel.xcdatamodel */;
+			path = DataModel.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};

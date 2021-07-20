@@ -6,17 +6,13 @@
 //
 
 import UIKit
-import Firebase
 
 class TasksViewController: UIViewController {
     @IBOutlet weak var taskList: UITableView!
     @IBOutlet weak var addTaskButton: UIButton!
     
-    var tasks: [Task] = []
+    var tasks: [Task] = TaskHandler.fetchTasks()
     var selectedTask: Task? = nil
-    
-    let auth = Auth.auth()
-    let firestore = Firestore.firestore()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,21 +20,8 @@ class TasksViewController: UIViewController {
         taskList.dataSource = self
         taskList.register(UINib(nibName: CellIdentifiers.TasksTableViewCell, bundle: nil), forCellReuseIdentifier: CellIdentifiers.TasksTableViewCell)
         addTaskButton.layer.cornerRadius = 30
-        
-        TaskHandler.listener { tasks, error in
-            if let error = error {
-                print(error.localizedDescription)
-                return
-            }
-            
-            if let tasks = tasks {
-                self.tasks = tasks
-                
-                DispatchQueue.main.async {
-                    self.taskList.reloadData()
-                }
-            }
-        }
+    
+        TaskHandler.delegate = self
     }
 }
 
@@ -46,18 +29,10 @@ class TasksViewController: UIViewController {
 
 extension TasksViewController {
     func completeAction(at indexPath: IndexPath) -> UIContextualAction {
-        let complete = UIContextualAction(style: .normal, title: "Complete") { (action, view, completionHandler) in
+        let complete = UIContextualAction(style: .normal, title: "Complete") { (action, view, completion) in
             let checkedTask = self.tasks.remove(at: indexPath.row)
-            
-            TaskHandler.completeTask(id: checkedTask.id) { error in
-                if let error = error {
-                    print(error.localizedDescription)
-                }
-                
-                print("Task with id \(checkedTask.id) marked complete")
-            }
-            
-            completionHandler(true)
+            TaskHandler.completeTask(task: checkedTask)
+            completion(true)
         }
         
         complete.backgroundColor = .systemGreen
@@ -67,10 +42,10 @@ extension TasksViewController {
     }
     
     func remindersAction(at indexPath: IndexPath) -> UIContextualAction {
-        let reminders = UIContextualAction(style: .normal, title: "Reminders") { (action, view, completionHandler) in
+        let reminders = UIContextualAction(style: .normal, title: "Reminders") { (action, view, completion) in
             self.selectedTask = self.tasks[indexPath.row]
             self.performSegue(withIdentifier: Segues.viewReminders, sender: self)
-            completionHandler(true)
+            completion(true)
         }
         
         reminders.backgroundColor = .systemOrange
@@ -80,10 +55,10 @@ extension TasksViewController {
     }
     
     func editAction(at indexPath: IndexPath) -> UIContextualAction {
-        let edit = UIContextualAction(style: .normal, title: "Edit") { (action, view, completionHandler) in
+        let edit = UIContextualAction(style: .normal, title: "Edit") { (action, view, completion) in
             self.selectedTask = self.tasks[indexPath.row]
             self.performSegue(withIdentifier: Segues.editTask, sender: self)
-            completionHandler(true)
+            completion(true)
         }
         
         edit.backgroundColor = .systemBlue
@@ -95,15 +70,7 @@ extension TasksViewController {
     func deleteAction(at indexPath: IndexPath) -> UIContextualAction {
         let delete = UIContextualAction(style: .destructive, title: "Delete") { (action, view, completion) in
             let removedTask = self.tasks.remove(at: indexPath.row)
-            
-            TaskHandler.deleteTask(id: removedTask.id) { error in
-                if let error = error {
-                    print(error.localizedDescription)
-                }
-                
-                print("Task with id \(removedTask.id) deleted")
-            }
-            
+            TaskHandler.deleteTask(task: removedTask)
             completion(true)
         }
         
@@ -123,12 +90,18 @@ extension TasksViewController: UITableViewDataSource {
         let cell = taskList.dequeueReusableCell(withIdentifier: CellIdentifiers.TasksTableViewCell, for: indexPath) as! TasksTableViewCell
         let task = tasks[indexPath.row]
         
-        let firebaseDate = task.date
+        let firebaseDate = task.date!
         let friendlyDate = DateHandler.getFriendlyDateString(from: firebaseDate)
                 
-        cell.taskID = task.id
-        cell.taskLabel.text = task.name
+        cell.task = task
+        cell.taskLabel.text = task.title!
         cell.dateLabel.text = friendlyDate
+        
+        if task.done {
+            cell.checkboxImage.image = Icons.checkmarkCircle
+        } else {
+            cell.checkboxImage.image = Icons.circle
+        }
                 
         if DateHandler.isOverdue(deadline: firebaseDate) {
             cell.mainView.backgroundColor = CustomColors.error
@@ -159,6 +132,7 @@ extension TasksViewController: UITableViewDataSource {
 extension TasksViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         selectedTask = tasks[indexPath.row]
+        tableView.deselectRow(at: indexPath, animated: true)
         performSegue(withIdentifier: Segues.editTask, sender: self)
     }
     
@@ -174,3 +148,26 @@ extension TasksViewController: UITableViewDelegate {
         }
     }
 }
+
+//extension TasksViewController: TasksViewControllerDelegate {
+//    func createTaskInView(task: Task) {
+//        tasks.append(task)
+//        reloadTable()
+//    }
+//
+//    func updateTaskInView(task: Task) {
+//        tasks = tasks.map { task.id == $0.id ? task : $0 }
+//        reloadTable()
+//    }
+//
+//    func deleteTaskInView(task: Task) {
+//        tasks = tasks.filter { task.id != $0.id }
+//        reloadTable()
+//    }
+//
+//    func reloadTable() {
+//        DispatchQueue.main.async {
+//            self.taskList.reloadData()
+//        }
+//    }
+//}

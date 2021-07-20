@@ -18,6 +18,7 @@ struct CustomColors {
 }
 
 struct Segues {
+    static let entryToLogin = "entryToLogin"
     static let startToList = "startToList"
     static let loginToList = "loginToList"
     static let editTask = "editTask"
@@ -42,4 +43,8 @@ struct CellIdentifiers {
     static let TasksTableViewCell = "TasksTableViewCell"
     static let ViewReminderTableViewCell = "ViewReminderTableViewCell"
     static let AddReminderTableViewCell = "AddReminderTableViewCell"
+}
+
+struct Defaults {
+    static let hasAccount = "hasAccount"
 }

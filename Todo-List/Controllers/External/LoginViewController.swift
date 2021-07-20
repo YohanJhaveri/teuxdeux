@@ -52,6 +52,16 @@ class LoginViewController: UIViewController {
         password.field.delegate = self
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        AuthHandler.handleBiometrics { [weak self] success in
+            if success {
+                DispatchQueue.main.async {
+                    self?.performSegue(withIdentifier: Segues.loginToList, sender: self)
+                }
+            }
+        }
+    }
+    
     func handleLogin() {
         let emailText = email.field.text!
         let passwordText = password.field.text!
@@ -59,7 +69,7 @@ class LoginViewController: UIViewController {
         clearErrors()
     
         AuthHandler.handleAuth(from: .login, email: emailText, password: passwordText) { [weak self] errors in
-            if !errors.isEmpty {
+            if let errors = errors {
                 self?.showErrors(errors: errors)
                 return
             }

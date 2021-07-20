@@ -13,7 +13,7 @@ import CoreLocation
 class NotificationHandler {
     private static func getContent(reminder: Reminder, task: Task) -> UNMutableNotificationContent {
         let content = UNMutableNotificationContent()
-        content.title = task.name
+        content.title = task.title!
         content.body = "\(reminder.type) reminder for your task"
         return content
     }
@@ -85,6 +85,8 @@ class NotificationHandler {
     
     static func createNotification(reminder: LocationReminder, task: Task) {
         let content = getContent(reminder: reminder, task: task)
+        
+        print(reminder.location)
         
         let center = CLLocationCoordinate2D(
             latitude: reminder.location.latitude,
