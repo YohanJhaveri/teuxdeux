@@ -9,19 +9,54 @@ import UIKit
 
 class TasksViewController: UIViewController {
     @IBOutlet weak var taskList: UITableView!
+    @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var addTaskButton: UIButton!
     
-    var tasks: [Task] = TaskHandler.fetchTasks()
+    var tasks: [Task] = []
     var selectedTask: Task? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        searchBar.delegate = self
         taskList.delegate = self
         taskList.dataSource = self
         taskList.register(UINib(nibName: CellIdentifiers.TasksTableViewCell, bundle: nil), forCellReuseIdentifier: CellIdentifiers.TasksTableViewCell)
         addTaskButton.layer.cornerRadius = 30
+        
+        // loads initial tasks
+        update()
+    }
     
-        TaskHandler.delegate = self
+    override func viewDidAppear(_ animated: Bool) {
+        NotificationCenter.default.addObserver(self, selector: #selector(update), name: NotificationNames.update, object: nil)
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    @objc func update() {
+        if let searchText = searchBar.text {
+            if searchText.isEmpty {
+                tasks = TaskHandler.fetchTasks(complete: false, searchText: nil)
+            } else {
+                tasks = TaskHandler.fetchTasks(complete: false, searchText: searchText)
+            }
+        }
+
+        DispatchQueue.main.async {  [weak self] in
+            self?.taskList.reloadData()
+        }
+    }
+}
+
+extension TasksViewController: UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        update()
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        view.endEditing(true)
     }
 }
 
@@ -29,14 +64,15 @@ class TasksViewController: UIViewController {
 
 extension TasksViewController {
     func completeAction(at indexPath: IndexPath) -> UIContextualAction {
+        let task = self.tasks[indexPath.row]
+        
         let complete = UIContextualAction(style: .normal, title: "Complete") { (action, view, completion) in
-            let checkedTask = self.tasks.remove(at: indexPath.row)
-            TaskHandler.completeTask(task: checkedTask)
+            TaskHandler.toggleTask(task: task)
             completion(true)
         }
         
         complete.backgroundColor = .systemGreen
-        complete.image = Icons.checkmark
+        complete.image = Icons.checkmarkCircle
         
         return complete
     }
@@ -68,9 +104,10 @@ extension TasksViewController {
     }
     
     func deleteAction(at indexPath: IndexPath) -> UIContextualAction {
+        let task = self.tasks[indexPath.row]
+        
         let delete = UIContextualAction(style: .destructive, title: "Delete") { (action, view, completion) in
-            let removedTask = self.tasks.remove(at: indexPath.row)
-            TaskHandler.deleteTask(task: removedTask)
+            TaskHandler.deleteTask(task: task)
             completion(true)
         }
         
@@ -83,12 +120,12 @@ extension TasksViewController {
 
 extension TasksViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return tasks.count
+        return self.tasks.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = taskList.dequeueReusableCell(withIdentifier: CellIdentifiers.TasksTableViewCell, for: indexPath) as! TasksTableViewCell
-        let task = tasks[indexPath.row]
+        let task = self.tasks[indexPath.row]
         
         let firebaseDate = task.date!
         let friendlyDate = DateHandler.getFriendlyDateString(from: firebaseDate)
@@ -131,7 +168,7 @@ extension TasksViewController: UITableViewDataSource {
 
 extension TasksViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        selectedTask = tasks[indexPath.row]
+        selectedTask = self.tasks[indexPath.row]
         tableView.deselectRow(at: indexPath, animated: true)
         performSegue(withIdentifier: Segues.editTask, sender: self)
     }
@@ -148,26 +185,3 @@ extension TasksViewController: UITableViewDelegate {
         }
     }
 }
-
-//extension TasksViewController: TasksViewControllerDelegate {
-//    func createTaskInView(task: Task) {
-//        tasks.append(task)
-//        reloadTable()
-//    }
-//
-//    func updateTaskInView(task: Task) {
-//        tasks = tasks.map { task.id == $0.id ? task : $0 }
-//        reloadTable()
-//    }
-//
-//    func deleteTaskInView(task: Task) {
-//        tasks = tasks.filter { task.id != $0.id }
-//        reloadTable()
-//    }
-//
-//    func reloadTable() {
-//        DispatchQueue.main.async {
-//            self.taskList.reloadData()
-//        }
-//    }
-//}

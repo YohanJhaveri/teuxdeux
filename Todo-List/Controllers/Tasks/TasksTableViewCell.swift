@@ -30,6 +30,6 @@ class TasksTableViewCell: UITableViewCell {
     }
     
     @IBAction func onCheckPressed(_ sender: UIButton) {
-        TaskHandler.completeTask(task: self.task!)
+        TaskHandler.toggleTask(task: task!)
     }
 }

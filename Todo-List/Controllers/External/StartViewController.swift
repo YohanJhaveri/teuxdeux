@@ -50,6 +50,8 @@ class StartViewController: UIViewController {
         
         email.field.delegate = self
         password.field.delegate = self
+     
+        enableKeyboardDimissOnOutsidePress()
     }
     
     func handleSignUp() {

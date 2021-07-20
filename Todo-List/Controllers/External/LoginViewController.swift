@@ -50,6 +50,8 @@ class LoginViewController: UIViewController {
         
         email.field.delegate = self
         password.field.delegate = self
+        
+        enableKeyboardDimissOnOutsidePress()
     }
     
     override func viewDidAppear(_ animated: Bool) {

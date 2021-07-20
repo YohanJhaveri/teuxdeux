@@ -37,6 +37,7 @@ struct Icons {
     static let circle = UIImage(systemName: "circle")
     static let clock = UIImage(systemName: "clock.fill")
     static let location = UIImage(systemName: "location.fill")
+    static let undo = UIImage(systemName: "arrow.counterclockwise")
 }
 
 struct CellIdentifiers {
@@ -47,4 +48,8 @@ struct CellIdentifiers {
 
 struct Defaults {
     static let hasAccount = "hasAccount"
+}
+
+struct NotificationNames {
+    static let update = Notification.Name("update")
 }
