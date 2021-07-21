@@ -39,6 +39,7 @@ class LoginViewController: UIViewController {
     }
     
     let auth = Auth.auth()
+    let userDefaults = UserDefaults.standard
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,9 +57,19 @@ class LoginViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         AuthHandler.handleBiometrics { [weak self] success in
+            
             if success {
-                DispatchQueue.main.async {
-                    self?.performSegue(withIdentifier: Segues.loginToList, sender: self)
+                if let email = self?.userDefaults.value(forKey: Defaults.accountEmail) as? String {
+                    let password = KeychainHandler.getPassword(email: email)
+                    
+                    AuthHandler.handleAuth(from: .login, email: email, password: password ?? "") { [weak self] errors in
+                        if let errors = errors {
+                            self?.showErrors(errors: errors)
+                            return
+                        }
+
+                        self?.performSegue(withIdentifier: Segues.loginToList, sender: self)
+                    }
                 }
             }
         }

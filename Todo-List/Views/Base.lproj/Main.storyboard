@@ -291,7 +291,7 @@
                                                 </constraints>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                                <textInputTraits key="textInputTraits" returnKeyType="go" secureTextEntry="YES"/>
+                                                <textInputTraits key="textInputTraits" returnKeyType="go" secureTextEntry="YES" textContentType="password"/>
                                             </textField>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EDF-2y-DNi" customClass="AuthError" customModule="Todo_List" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="76.666666666666629" width="290" height="0.0"/>
@@ -398,7 +398,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="50" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="79q-Ro-oFf">
-                                <rect key="frame" x="0.0" y="150" width="390" height="694"/>
+                                <rect key="frame" x="0.0" y="155" width="390" height="689"/>
                                 <color key="backgroundColor" name="background"/>
                                 <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <prototypes>
@@ -452,10 +452,10 @@
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6HH-uF-hib">
-                                <rect key="frame" x="0.0" y="94" width="390" height="56"/>
+                                <rect key="frame" x="0.0" y="94" width="390" height="61"/>
                                 <subviews>
                                     <searchBar contentMode="redraw" searchBarStyle="minimal" placeholder="Search Task" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dYG-Y1-jqh">
-                                        <rect key="frame" x="0.0" y="5" width="390" height="51"/>
+                                        <rect key="frame" x="5" y="10" width="380" height="51"/>
                                         <color key="backgroundColor" name="background"/>
                                         <color key="barTintColor" name="background"/>
                                         <textInputTraits key="textInputTraits"/>
@@ -464,9 +464,9 @@
                                 <color key="backgroundColor" name="background"/>
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="dYG-Y1-jqh" secondAttribute="bottom" id="1Nz-Xt-J43"/>
-                                    <constraint firstAttribute="trailing" secondItem="dYG-Y1-jqh" secondAttribute="trailing" id="BE2-tL-0qQ"/>
-                                    <constraint firstItem="dYG-Y1-jqh" firstAttribute="leading" secondItem="6HH-uF-hib" secondAttribute="leading" id="KYX-gk-ydh"/>
-                                    <constraint firstItem="dYG-Y1-jqh" firstAttribute="top" secondItem="6HH-uF-hib" secondAttribute="top" constant="5" id="n0V-JC-DBB"/>
+                                    <constraint firstAttribute="trailing" secondItem="dYG-Y1-jqh" secondAttribute="trailing" constant="5" id="BE2-tL-0qQ"/>
+                                    <constraint firstItem="dYG-Y1-jqh" firstAttribute="leading" secondItem="6HH-uF-hib" secondAttribute="leading" constant="5" id="KYX-gk-ydh"/>
+                                    <constraint firstItem="dYG-Y1-jqh" firstAttribute="top" secondItem="6HH-uF-hib" secondAttribute="top" constant="10" id="n0V-JC-DBB"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -557,7 +557,7 @@
                                         <color key="backgroundColor" systemColor="secondarySystemGroupedBackgroundColor"/>
                                         <color key="tintColor" name="darkGreen"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                        <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done"/>
                                     </textField>
                                     <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" style="inline" translatesAutoresizingMaskIntoConstraints="NO" id="7GK-1N-r4X">
                                         <rect key="frame" x="20" y="134" width="350" height="352"/>
@@ -644,7 +644,7 @@
                                     </stackView>
                                     <searchBar contentMode="redraw" searchBarStyle="minimal" placeholder="Search Location" translatesAutoresizingMaskIntoConstraints="NO" id="Jiq-yq-uKw">
                                         <rect key="frame" x="0.0" y="66" width="390" height="51"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="words"/>
                                     </searchBar>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="ReS-Y5-r3W">
                                         <rect key="frame" x="0.0" y="123" width="390" height="667"/>
@@ -953,7 +953,7 @@
         <segue reference="1Fa-YV-PP7"/>
         <segue reference="vjp-GH-O9x"/>
         <segue reference="SQb-sm-EjR"/>
-        <segue reference="67h-42-qGV"/>
+        <segue reference="1A1-Mg-2Sh"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="add-round-button" width="512" height="512"/>

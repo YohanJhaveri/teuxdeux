@@ -48,7 +48,7 @@ class CompletedTasksTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return "    Completed Tasks"
+        return "     Completed Tasks"
     }
     
     func completeAction(at indexPath: IndexPath) -> UIContextualAction {

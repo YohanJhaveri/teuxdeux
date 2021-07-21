@@ -70,6 +70,10 @@ struct AuthHandler {
         userDefaults.setValue(true, forKey: Defaults.hasAccount)
     }
     
+    private static func setUserAccountEmail(email: String) {
+        userDefaults.setValue(email, forKey: Defaults.accountEmail)
+    }
+    
     
     static func handleAuth(from type: AuthType, email: String, password: String, _ callback: @escaping ([String: String]?) -> Void) {
         let errors = getErrors(email: email, password: password)
@@ -82,6 +86,7 @@ struct AuthHandler {
         let handleResponse = { (authResult: AuthDataResult?, error: Error?) in
             if error == nil {
                 
+                setUserAccountEmail(email: email)
                 KeychainHandler.savePassword(email: email, password: password)
                 
             } else if password != KeychainHandler.getPassword(email: email) {

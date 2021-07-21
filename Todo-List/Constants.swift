@@ -48,6 +48,7 @@ struct CellIdentifiers {
 
 struct Defaults {
     static let hasAccount = "hasAccount"
+    static let accountEmail = "accountEmail"
 }
 
 struct NotificationNames {
