@@ -7,7 +7,6 @@
 
 import Foundation
 import GooglePlaces
-import Alamofire
 
 enum PlacesError: Error {
     case failedToFind
