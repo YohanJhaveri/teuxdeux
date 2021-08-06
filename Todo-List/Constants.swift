@@ -46,7 +46,7 @@ struct CellIdentifiers {
     static let AddReminderTableViewCell = "AddReminderTableViewCell"
 }
 
-struct Defaults {
+struct UserDefaultsKeys {
     static let hasAccount = "hasAccount"
     static let accountEmail = "accountEmail"
 }

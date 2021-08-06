@@ -20,7 +20,7 @@ class EntryViewController: UIViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        if let userHasAccount = userDefaults.value(forKey: Defaults.hasAccount) {
+        if let userHasAccount = userDefaults.value(forKey: UserDefaultsKeys.hasAccount) {
             if userHasAccount as! Bool {
                 self.performSegue(withIdentifier: Segues.entryToLogin, sender: self)
             }

@@ -125,7 +125,7 @@
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="1@2.com" borderStyle="roundedRect" placeholder="name@example.com" textAlignment="natural" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="h5J-yd-UIo" customClass="AuthField" customModule="Todo_List" customModuleProvider="target">
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="name@example.com" textAlignment="natural" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="h5J-yd-UIo" customClass="AuthField" customModule="Todo_List" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="26.666666666666657" width="290" height="45"/>
                                                 <color key="backgroundColor" name="lightGreen"/>
                                                 <color key="tintColor" name="darkGreen"/>
@@ -153,7 +153,7 @@
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="AAAAAAAA" borderStyle="roundedRect" placeholder="********" textAlignment="natural" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="ndI-ic-x29" customClass="AuthField" customModule="Todo_List" customModuleProvider="target">
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="********" textAlignment="natural" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="ndI-ic-x29" customClass="AuthField" customModule="Todo_List" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="26.666666666666629" width="290" height="45"/>
                                                 <color key="backgroundColor" name="lightGreen"/>
                                                 <color key="tintColor" name="darkGreen"/>
@@ -951,9 +951,9 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="1Fa-YV-PP7"/>
-        <segue reference="vjp-GH-O9x"/>
-        <segue reference="SQb-sm-EjR"/>
-        <segue reference="1A1-Mg-2Sh"/>
+        <segue reference="SuY-L4-HXj"/>
+        <segue reference="v7I-oV-tac"/>
+        <segue reference="67h-42-qGV"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="add-round-button" width="512" height="512"/>

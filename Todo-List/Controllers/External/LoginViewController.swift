@@ -59,7 +59,7 @@ class LoginViewController: UIViewController {
         AuthHandler.handleBiometrics { [weak self] success in
             
             if success {
-                if let email = self?.userDefaults.value(forKey: Defaults.accountEmail) as? String {
+                if let email = self?.userDefaults.value(forKey: UserDefaultsKeys.accountEmail) as? String {
                     let password = KeychainHandler.getPassword(email: email)
                     
                     AuthHandler.handleAuth(from: .login, email: email, password: password ?? "") { [weak self] errors in

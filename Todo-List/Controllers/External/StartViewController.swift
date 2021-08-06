@@ -66,7 +66,7 @@ class StartViewController: UIViewController {
                 return
             }
             
-            self?.performSegue(withIdentifier: Segues.loginToList, sender: self)
+            self?.performSegue(withIdentifier: Segues.startToList, sender: self)
         }
     }
     

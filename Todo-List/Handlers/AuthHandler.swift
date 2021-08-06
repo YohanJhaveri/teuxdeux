@@ -67,11 +67,11 @@ struct AuthHandler {
 
     
     private static func setUserHasAccount() {
-        userDefaults.setValue(true, forKey: Defaults.hasAccount)
+        userDefaults.setValue(true, forKey: UserDefaultsKeys.hasAccount)
     }
     
     private static func setUserAccountEmail(email: String) {
-        userDefaults.setValue(email, forKey: Defaults.accountEmail)
+        userDefaults.setValue(email, forKey: UserDefaultsKeys.accountEmail)
     }
     
     
