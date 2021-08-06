@@ -23,8 +23,8 @@ class TaskFormViewController: UIViewController {
         
         if let safeSelectedTask = selectedTask {
             modalTitle.text = "Edit Task"
-            taskNameTextField.text = safeSelectedTask.name
-            taskDateField.date = DateHandler.getFirebaseDateValue(from: safeSelectedTask.date) ?? Date()
+            taskNameTextField.text = safeSelectedTask.title!
+            taskDateField.date = DateHandler.getFirebaseDateValue(from: safeSelectedTask.date!) ?? Date()
         }
         
         taskNameTextField.delegate = self
@@ -38,44 +38,23 @@ class TaskFormViewController: UIViewController {
         taskNameTextField.addPlaceholder(text: message, color: CustomColors.error!)
     }
     
-    func handleCallback(error: Error?) {
-        if error != nil {
-            self.showError(message: error!.localizedDescription)
-            return
-        }
-        
-        self.dismiss(animated: true, completion: nil)
-    }
-    
     func handleSubmit() {
-        let name = taskNameTextField.text
-        let email = auth.currentUser?.email
+        let title = taskNameTextField.text
         
-        if name == nil {
+        if title == nil {
             showError(message: "Task cannot be empty")
-            return
-        }
-        
-        if email == nil {
-            showError(message: "User is not signed in")
             return
         }
         
         let date = DateHandler.getFirebaseDateString(from: taskDateField.date)
         
         if let selectedTask = selectedTask {
-            TaskHandler.updateTask(id: selectedTask.id, updatedFields: [
-                "name": name!,
-                "date": date
-            ], completion: handleCallback)
+            TaskHandler.editTask(task: selectedTask, title: title!, date: date)
         } else {
-            TaskHandler.createTask(createdFields: [
-                "user": email!,
-                "name": name!,
-                "date": date,
-                "done": false
-            ], completion: handleCallback)
+            TaskHandler.createTask(title: title!, date: date)
         }
+        
+        self.dismiss(animated: true, completion: nil)
     }
     
     

@@ -1,5 +1,5 @@
 //
-//  Validator.swift
+//  AuthHandler.swift
 //  Todo-List
 //
 //  Created by Yohan Jhaveri on 7/6/21.
@@ -7,6 +7,8 @@
 
 import Foundation
 import Firebase
+import LocalAuthentication
+
 
 //enum AuthError: Error {
 //    case invalidEmail // self check + FIRAuthErrorCodeInvalidEmail
@@ -36,17 +38,20 @@ enum AuthType {
 
 struct AuthHandler {
     private static let auth = Auth.auth()
+    private static let userDefaults = UserDefaults.standard
+    
     
     private static func isValidEmail(_ email: String) -> Bool {
-        return NSPredicate(format: "SELF MATCHES %@", "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}").evaluate(with: email)
+        return email.isEmailFormat
     }
+    
     
     private static func isValidPassword(_ password: String) -> Bool {
         return password.count >= 8
     }
     
     
-    static func handleAuth(from type: AuthType, email: String, password: String, _ callback: @escaping ([String: String]) -> Void) {
+    private static func getErrors(email: String, password: String) -> [String: String] {
         var errors: [String: String] = [:]
         
         if !isValidEmail(email) {
@@ -57,23 +62,80 @@ struct AuthHandler {
             errors["password"] = "Password must contain at least 8 characters"
         }
         
+        return errors
+    }
+
+    
+    private static func setUserHasAccount() {
+        userDefaults.setValue(true, forKey: UserDefaultsKeys.hasAccount)
+    }
+    
+    private static func setUserAccountEmail(email: String) {
+        userDefaults.setValue(email, forKey: UserDefaultsKeys.accountEmail)
+    }
+    
+    
+    static func handleAuth(from type: AuthType, email: String, password: String, _ callback: @escaping ([String: String]?) -> Void) {
+        let errors = getErrors(email: email, password: password)
+        
         if !errors.isEmpty {
             callback(errors)
             return
         }
-                
+        
         let handleResponse = { (authResult: AuthDataResult?, error: Error?) in
-            if let error = error {
-                errors["email"] = ""
-                errors["password"] = error.localizedDescription
+            if error == nil {
+                
+                setUserAccountEmail(email: email)
+                KeychainHandler.savePassword(email: email, password: password)
+                
+            } else if password != KeychainHandler.getPassword(email: email) {
+                
+                callback([
+                    "email": "",
+                    "password": error!.localizedDescription
+                ])
+                
+                return
+                
             }
             
-            callback(errors)
+            setUserHasAccount()
+            callback(nil)
         }
         
         switch type {
-            case .start: self.auth.createUser(withEmail: email, password: password, completion: handleResponse)
-            case .login: self.auth.signIn(withEmail: email, password: password, completion: handleResponse)
+        case .start: self.auth.createUser(withEmail: email, password: password, completion: handleResponse)
+        case .login: self.auth.signIn(withEmail: email, password: password, completion: handleResponse)
+        }
+    }
+    
+    
+    static func handleBiometrics(completion: @escaping (Bool) -> Void) {
+        let context = LAContext()
+        var error: NSError?
+        
+        if context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) {
+            let reason = "Authenticate to unlock your note."
+            
+            context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: reason) { authenticated, error in
+                if let error = error {
+                    print("\(error)")
+                }
+                
+                if authenticated {
+                    setUserHasAccount()
+                }
+                
+                completion(authenticated)
+            }
+            
+        } else {
+            
+            if let errorString = error?.localizedDescription {
+                print("Error in biometric policy evaluation: \(errorString)")
+                completion(false)
+            }
         }
     }
 }

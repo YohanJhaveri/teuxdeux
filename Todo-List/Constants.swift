@@ -18,6 +18,7 @@ struct CustomColors {
 }
 
 struct Segues {
+    static let entryToLogin = "entryToLogin"
     static let startToList = "startToList"
     static let loginToList = "loginToList"
     static let editTask = "editTask"
@@ -36,10 +37,20 @@ struct Icons {
     static let circle = UIImage(systemName: "circle")
     static let clock = UIImage(systemName: "clock.fill")
     static let location = UIImage(systemName: "location.fill")
+    static let undo = UIImage(systemName: "arrow.counterclockwise")
 }
 
 struct CellIdentifiers {
     static let TasksTableViewCell = "TasksTableViewCell"
     static let ViewReminderTableViewCell = "ViewReminderTableViewCell"
     static let AddReminderTableViewCell = "AddReminderTableViewCell"
+}
+
+struct UserDefaultsKeys {
+    static let hasAccount = "hasAccount"
+    static let accountEmail = "accountEmail"
+}
+
+struct NotificationNames {
+    static let update = Notification.Name("update")
 }

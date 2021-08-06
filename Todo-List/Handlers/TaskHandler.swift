@@ -6,64 +6,87 @@
 //
 
 import Foundation
-import Firebase
+import CoreData
+import UIKit
+
 
 class TaskHandler {
-    static let auth = Auth.auth()
-    static let firestore = Firestore.firestore()
-    static let reference = firestore.collection("tasks")
+    static let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
-    static func listener(_ completion: @escaping ([Task]?, Error?) -> Void) {
-        if let email = auth.currentUser?.email {
-            reference
-                .whereField("user", isEqualTo: email)
-                .whereField("done", isEqualTo: false)
-                .order(by: "date")
-                .addSnapshotListener { snapshot, error in
-                    if let error = error {
-                        completion(nil, error)
-                        return
-                    }
-                    
-                    if let documents = snapshot?.documents {
-                        let tasks: [Task] = documents.map({ document in
-                            let id = document.documentID
-                            let data = document.data()
-                            
-                            let name = data["name"] as? String
-                            let date = data["date"] as? String
-                            
-                            return Task(
-                                id: id,
-                                done: false,
-                                name: name ?? "",
-                                date: date ?? ""
-                            )
-                        })
-                        
-                        completion(tasks, nil)
-                    }
-                }
-        } else {
-            print("User is not logged in!")
+    static func fetchTasks(complete: Bool, searchText: String?) -> [Task] {
+        var format = "done == \(complete ? "TRUE" : "FALSE")"
+        var argumentArray: [Any]?
+        
+        // if search text exists then send query
+        if let searchText = searchText {
+            format += " AND title CONTAINS[cd] %@"
+            argumentArray = [searchText]
+        }
+        
+        return sendRequest(format: format, argumentArray: argumentArray)
+    }
+    
+    private static func triggerUpdateNotification() {
+        NotificationCenter.default.post(name: NotificationNames.update, object: nil)
+    }
+    
+    private static func sendRequest(format: String, argumentArray: [Any]?) -> [Task] {
+        do {
+            let request: NSFetchRequest<Task> = Task.fetchRequest()
+            let predicate = NSPredicate(format: format, argumentArray: argumentArray)
+            let sorDescriptor = NSSortDescriptor(key: "date", ascending: true)
+            
+            request.predicate = predicate
+            request.sortDescriptors = [sorDescriptor]
+            
+            return try context.fetch(request)
+        } catch {
+            return []
         }
     }
     
-    static func createTask(createdFields: [String: Any], completion: @escaping (Error?) -> Void) {
-        reference.addDocument(data: createdFields, completion: completion)
+    private static func saveContext() {
+        do {
+            try context.save()
+        } catch {
+            print("There was an error saving context")
+        }
     }
     
-    static func updateTask(id: String, updatedFields: [String: Any], completion: @escaping  (Error?) -> Void) {
-        reference.document(id).updateData(updatedFields, completion: completion)
+    static func createTask(title: String, date: String) {
+        let newTask = Task(context: context)
+        
+        newTask.id = UUID().uuidString
+        newTask.title = title
+        newTask.date = date
+        newTask.done = false
+        
+        saveContext()
+        triggerUpdateNotification()
     }
     
-    static func completeTask(id: String, completion: @escaping  (Error?) -> Void) {
-        reference.document(id).updateData(["done": true], completion: completion)
-        ReminderHandler.deleteRemindersOfTask(id: id)
+    static func editTask(task: Task, title: String, date: String) {
+        task.title = title
+        task.date = date
+        
+        saveContext()
+        triggerUpdateNotification()
     }
     
-    static func deleteTask(id: String, completion: @escaping  (Error?) -> Void) {
-        reference.document(id).delete(completion: completion)
-        ReminderHandler.deleteRemindersOfTask(id: id)
+    static func toggleTask(task: Task) {
+        task.done = !task.done
+        
+        saveContext()
+        triggerUpdateNotification()
+        
+        ReminderHandler.deleteRemindersOfTask(id: task.id!)
+    }
+    
+    static func deleteTask(task: Task) {
+        ReminderHandler.deleteRemindersOfTask(id: task.id!)
+        
+        context.delete(task)
+        saveContext()
+        triggerUpdateNotification()
     }
 }

@@ -6,10 +6,8 @@ target 'Todo-List' do
   use_frameworks!
 
   # Pods for Todo-List
-	pod 'IQKeyboardManagerSwift'
   pod 'Firebase/Auth'
   pod 'Firebase/Firestore'
   pod 'GooglePlaces', '4.2.0'
-  pod 'Alamofire'
 
 end

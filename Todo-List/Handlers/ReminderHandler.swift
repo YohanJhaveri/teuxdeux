@@ -7,6 +7,7 @@
 
 import Foundation
 import Firebase
+import CoreData
 
 class ReminderHandler {
     static let auth = Auth.auth()
@@ -62,8 +63,9 @@ class ReminderHandler {
         )
     }
     
+    
     static func listener(task: Task, _ completion: @escaping ([Reminder]?, Error?) -> Void) {
-        let taskID = task.id
+        let taskID = task.id!
         
         reference
             .whereField("taskID", isEqualTo: taskID)

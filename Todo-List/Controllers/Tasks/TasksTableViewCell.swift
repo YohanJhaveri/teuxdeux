@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import Firebase
 
 class TasksTableViewCell: UITableViewCell {
     @IBOutlet weak var mainView: UIView!
@@ -14,10 +13,8 @@ class TasksTableViewCell: UITableViewCell {
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var checkboxImage: UIImageView!
     
-    var taskID: String = ""
-    
-    let firestore = Firestore.firestore()
-    
+    var task: Task?
+        
     override func awakeFromNib() {
         super.awakeFromNib()
     }
@@ -33,20 +30,6 @@ class TasksTableViewCell: UITableViewCell {
     }
     
     @IBAction func onCheckPressed(_ sender: UIButton) {
-        checkboxImage.image = Icons.checkmarkCircle
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            self.firestore
-                .collection("tasks")
-                .document(self.taskID)
-                .updateData([ "done": true ]) { error in
-                    if error != nil {
-                        print("Could not complete task")
-                        return
-                    }
-                    
-                    self.checkboxImage.image = Icons.circle
-                }
-        }
+        TaskHandler.toggleTask(task: task!)
     }
 }

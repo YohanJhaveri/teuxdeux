@@ -6,39 +6,57 @@
 //
 
 import UIKit
-import Firebase
 
 class TasksViewController: UIViewController {
     @IBOutlet weak var taskList: UITableView!
+    @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var addTaskButton: UIButton!
     
     var tasks: [Task] = []
     var selectedTask: Task? = nil
     
-    let auth = Auth.auth()
-    let firestore = Firestore.firestore()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
+        searchBar.delegate = self
         taskList.delegate = self
         taskList.dataSource = self
         taskList.register(UINib(nibName: CellIdentifiers.TasksTableViewCell, bundle: nil), forCellReuseIdentifier: CellIdentifiers.TasksTableViewCell)
         addTaskButton.layer.cornerRadius = 30
         
-        TaskHandler.listener { tasks, error in
-            if let error = error {
-                print(error.localizedDescription)
-                return
-            }
-            
-            if let tasks = tasks {
-                self.tasks = tasks
-                
-                DispatchQueue.main.async {
-                    self.taskList.reloadData()
-                }
+        // loads initial tasks
+        update()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        NotificationCenter.default.addObserver(self, selector: #selector(update), name: NotificationNames.update, object: nil)
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    @objc func update() {
+        if let searchText = searchBar.text {
+            if searchText.isEmpty {
+                tasks = TaskHandler.fetchTasks(complete: false, searchText: nil)
+            } else {
+                tasks = TaskHandler.fetchTasks(complete: false, searchText: searchText)
             }
         }
+
+        DispatchQueue.main.async {  [weak self] in
+            self?.taskList.reloadData()
+        }
+    }
+}
+
+extension TasksViewController: UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        update()
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        view.endEditing(true)
     }
 }
 
@@ -46,31 +64,24 @@ class TasksViewController: UIViewController {
 
 extension TasksViewController {
     func completeAction(at indexPath: IndexPath) -> UIContextualAction {
-        let complete = UIContextualAction(style: .normal, title: "Complete") { (action, view, completionHandler) in
-            let checkedTask = self.tasks.remove(at: indexPath.row)
-            
-            TaskHandler.completeTask(id: checkedTask.id) { error in
-                if let error = error {
-                    print(error.localizedDescription)
-                }
-                
-                print("Task with id \(checkedTask.id) marked complete")
-            }
-            
-            completionHandler(true)
+        let task = self.tasks[indexPath.row]
+        
+        let complete = UIContextualAction(style: .normal, title: "Complete") { (action, view, completion) in
+            TaskHandler.toggleTask(task: task)
+            completion(true)
         }
         
         complete.backgroundColor = .systemGreen
-        complete.image = Icons.checkmark
+        complete.image = Icons.checkmarkCircle
         
         return complete
     }
     
     func remindersAction(at indexPath: IndexPath) -> UIContextualAction {
-        let reminders = UIContextualAction(style: .normal, title: "Reminders") { (action, view, completionHandler) in
+        let reminders = UIContextualAction(style: .normal, title: "Reminders") { (action, view, completion) in
             self.selectedTask = self.tasks[indexPath.row]
             self.performSegue(withIdentifier: Segues.viewReminders, sender: self)
-            completionHandler(true)
+            completion(true)
         }
         
         reminders.backgroundColor = .systemOrange
@@ -80,10 +91,10 @@ extension TasksViewController {
     }
     
     func editAction(at indexPath: IndexPath) -> UIContextualAction {
-        let edit = UIContextualAction(style: .normal, title: "Edit") { (action, view, completionHandler) in
+        let edit = UIContextualAction(style: .normal, title: "Edit") { (action, view, completion) in
             self.selectedTask = self.tasks[indexPath.row]
             self.performSegue(withIdentifier: Segues.editTask, sender: self)
-            completionHandler(true)
+            completion(true)
         }
         
         edit.backgroundColor = .systemBlue
@@ -93,17 +104,10 @@ extension TasksViewController {
     }
     
     func deleteAction(at indexPath: IndexPath) -> UIContextualAction {
+        let task = self.tasks[indexPath.row]
+        
         let delete = UIContextualAction(style: .destructive, title: "Delete") { (action, view, completion) in
-            let removedTask = self.tasks.remove(at: indexPath.row)
-            
-            TaskHandler.deleteTask(id: removedTask.id) { error in
-                if let error = error {
-                    print(error.localizedDescription)
-                }
-                
-                print("Task with id \(removedTask.id) deleted")
-            }
-            
+            TaskHandler.deleteTask(task: task)
             completion(true)
         }
         
@@ -116,19 +120,25 @@ extension TasksViewController {
 
 extension TasksViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return tasks.count
+        return self.tasks.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = taskList.dequeueReusableCell(withIdentifier: CellIdentifiers.TasksTableViewCell, for: indexPath) as! TasksTableViewCell
-        let task = tasks[indexPath.row]
+        let task = self.tasks[indexPath.row]
         
-        let firebaseDate = task.date
+        let firebaseDate = task.date!
         let friendlyDate = DateHandler.getFriendlyDateString(from: firebaseDate)
                 
-        cell.taskID = task.id
-        cell.taskLabel.text = task.name
+        cell.task = task
+        cell.taskLabel.text = task.title!
         cell.dateLabel.text = friendlyDate
+        
+        if task.done {
+            cell.checkboxImage.image = Icons.checkmarkCircle
+        } else {
+            cell.checkboxImage.image = Icons.circle
+        }
                 
         if DateHandler.isOverdue(deadline: firebaseDate) {
             cell.mainView.backgroundColor = CustomColors.error
@@ -158,7 +168,8 @@ extension TasksViewController: UITableViewDataSource {
 
 extension TasksViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        selectedTask = tasks[indexPath.row]
+        selectedTask = self.tasks[indexPath.row]
+        tableView.deselectRow(at: indexPath, animated: true)
         performSegue(withIdentifier: Segues.editTask, sender: self)
     }
     

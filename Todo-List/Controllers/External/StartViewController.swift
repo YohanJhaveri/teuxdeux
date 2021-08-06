@@ -50,6 +50,8 @@ class StartViewController: UIViewController {
         
         email.field.delegate = self
         password.field.delegate = self
+     
+        enableKeyboardDimissOnOutsidePress()
     }
     
     func handleSignUp() {
@@ -59,12 +61,12 @@ class StartViewController: UIViewController {
         clearErrors()
     
         AuthHandler.handleAuth(from: .start, email: emailText, password: passwordText) { [weak self] errors in
-            if !errors.isEmpty {
+            if let errors = errors {
                 self?.showErrors(errors: errors)
                 return
             }
             
-            self?.performSegue(withIdentifier: Segues.loginToList, sender: self)
+            self?.performSegue(withIdentifier: Segues.startToList, sender: self)
         }
     }
     
